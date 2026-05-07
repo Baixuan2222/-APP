@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '猜拳遊戲',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
       home: const MyHomePage(title: '猜拳遊戲'),
     );
   }
@@ -57,7 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _play(RpsMove playerMove) {
-    final RpsMove computerMove = RpsMove.values[_random.nextInt(RpsMove.values.length)];
+    final RpsMove computerMove =
+        RpsMove.values[_random.nextInt(RpsMove.values.length)];
     final RoundOutcome outcome = _judge(playerMove, computerMove);
 
     setState(() {
@@ -138,11 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
       runSpacing: 2,
       children: List.generate(
         count,
-        (_) => Icon(
-          Icons.star,
-          color: Colors.blue,
-          size: size,
-        ),
+        (_) => Icon(Icons.star, color: Colors.blue, size: size),
       ),
     );
   }
@@ -181,15 +180,28 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(widget.title, style: Theme.of(context).textTheme.headlineMedium),
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
                 const SizedBox(height: 16),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 1500),
                   switchInCurve: Curves.easeOutBack,
                   switchOutCurve: Curves.easeIn,
-                  transitionBuilder: (Widget child, Animation<double> animation) {
-                    return RotationTransition(turns: animation, child: child,);
-                  },
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                        return RotationTransition(
+                          turns: Tween<double>(
+                            begin: 0.5,
+                            end: 1,
+                          ).animate(animation),
+                          child: FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          ),
+                        );
+                      },
                   child: _lastOutcome == RoundOutcome.playerWin
                       ? Image.asset(
                           _greatePath,
@@ -199,19 +211,19 @@ class _MyHomePageState extends State<MyHomePage> {
                           fit: BoxFit.contain,
                         )
                       : _lastOutcome == RoundOutcome.computerWin
-                          ? Image.asset(
-                              _cryPath,
-                              key: const ValueKey('outcome_computer_win'),
-                              width: 140,
-                              height: 140,
-                              fit: BoxFit.contain,
-                            )
-                          : Text(
-                              _resultText,
-                              key: const ValueKey('outcome_text'),
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                            ),
+                      ? Image.asset(
+                          _cryPath,
+                          key: const ValueKey('outcome_computer_win'),
+                          width: 140,
+                          height: 140,
+                          fit: BoxFit.contain,
+                        )
+                      : Text(
+                          _resultText,
+                          key: const ValueKey('outcome_text'),
+                          style: Theme.of(context).textTheme.titleLarge,
+                          textAlign: TextAlign.center,
+                        ),
                 ),
                 const SizedBox(height: 16),
                 Text('你出拳：${_moveLabel(_playerMove)}'),
@@ -222,12 +234,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   duration: const Duration(milliseconds: 320),
                   switchInCurve: Curves.easeOutBack,
                   switchOutCurve: Curves.easeIn,
-                  transitionBuilder: (Widget child, Animation<double> animation) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: ScaleTransition(scale: animation, child: child),
-                    );
-                  },
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: ScaleTransition(
+                            scale: animation,
+                            child: child,
+                          ),
+                        );
+                      },
                   child: _computerMove == null
                       ? const Text('-', key: ValueKey('empty'))
                       : Image.asset(
@@ -242,7 +258,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 Wrap(
                   spacing: 12,
                   children: [
-                    _moveButton(imagePath: _scissorsPath, move: RpsMove.scissors),
+                    _moveButton(
+                      imagePath: _scissorsPath,
+                      move: RpsMove.scissors,
+                    ),
                     _moveButton(imagePath: _rockPath, move: RpsMove.rock),
                     _moveButton(imagePath: _paperPath, move: RpsMove.paper),
                   ],
