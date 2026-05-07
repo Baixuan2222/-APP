@@ -184,14 +184,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text(widget.title, style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: 16),
                 AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 320),
+                  duration: const Duration(milliseconds: 1500),
                   switchInCurve: Curves.easeOutBack,
                   switchOutCurve: Curves.easeIn,
                   transitionBuilder: (Widget child, Animation<double> animation) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: ScaleTransition(scale: animation, child: child),
-                    );
+                    return RotationTransition(turns: animation, child: child,);
                   },
                   child: _lastOutcome == RoundOutcome.playerWin
                       ? Image.asset(
