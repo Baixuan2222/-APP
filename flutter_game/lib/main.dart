@@ -205,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: _lastOutcome == RoundOutcome.playerWin
                       ? Image.asset(
                           _greatePath,
-                          key: const ValueKey('outcome_player_win'),
+                          key: ValueKey(_computerWinCount+_playerWinCount+_drawCount),
                           width: 140,
                           height: 140,
                           fit: BoxFit.contain,
@@ -213,14 +213,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       : _lastOutcome == RoundOutcome.computerWin
                       ? Image.asset(
                           _cryPath,
-                          key: const ValueKey('outcome_computer_win'),
+                          key: ValueKey(_computerWinCount+_playerWinCount+_drawCount),
                           width: 140,
                           height: 140,
                           fit: BoxFit.contain,
                         )
                       : Text(
                           _resultText,
-                          key: const ValueKey('outcome_text'),
+                          key: ValueKey(_computerWinCount+_playerWinCount+_drawCount),
                           style: Theme.of(context).textTheme.titleLarge,
                           textAlign: TextAlign.center,
                         ),
@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text('電腦出拳：'),
                 const SizedBox(height: 8),
                 AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 320),
+                  duration: const Duration(milliseconds: 1500),
                   switchInCurve: Curves.easeOutBack,
                   switchOutCurve: Curves.easeIn,
                   transitionBuilder:
@@ -248,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ? const Text('-', key: ValueKey('empty'))
                       : Image.asset(
                           _moveImagePath(_computerMove!),
-                          key: ValueKey(_computerMove),
+                          key: ValueKey(_computerWinCount+_playerWinCount+_drawCount),
                           width: 88,
                           height: 88,
                           fit: BoxFit.contain,
